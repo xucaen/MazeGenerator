@@ -93,19 +93,30 @@ namespace MazeGenerator
             StringBuilder tscn = new StringBuilder();
 
             tscn.AppendLine("[gd_scene load_steps=4 format=3]");
+
             tscn.AppendLine("\n[sub_resource type=\"BoxShape3D\" id=\"BoxShape_Wall\"]");
-            tscn.AppendLine("size = Vector3(1, 1, 1)");
+            tscn.AppendLine("size = Vector3(4, 4, 4)");
             tscn.AppendLine("\n[sub_resource type=\"BoxMesh\" id=\"BoxMesh_Wall\"]");
+            tscn.AppendLine("size = Vector3(4, 4, 4)");
+
             tscn.AppendLine("\n[sub_resource type=\"BoxShape3D\" id=\"BoxShape_Floor\"]");
-            tscn.AppendLine("size = Vector3(1, 0.1, 1)");
+            tscn.AppendLine("size = Vector3(4, 0.1, 4)");
             tscn.AppendLine("\n[sub_resource type=\"BoxMesh\" id=\"BoxMesh_Floor\"]");
+            tscn.AppendLine("size = Vector3(4, 0.1, 4)");
+
+
             tscn.AppendLine("\n[node name=\"MazeLevel\" type=\"Node3D\"]");
 
             int i = 0;
             foreach (var wall in _walls)
             {
+                // Multiply X and Y by 4 to space them out. 
+                // Set Y-height to 2.0 (half the wall height) so the bottom sits at 0.
+                float posX = wall.X * 4.0f;
+                float posZ = wall.Y * 4.0f;
+
                 tscn.AppendLine($"\n[node name=\"Wall_{i}\" type=\"StaticBody3D\" parent=\".\"]");
-                tscn.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {wall.X}, 0.5, {wall.Y})");
+                tscn.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, 2.0, {posZ})");
                 tscn.AppendLine($"[node name=\"Col\" type=\"CollisionShape3D\" parent=\"Wall_{i}\"]\nshape = SubResource(\"BoxShape_Wall\")");
                 tscn.AppendLine($"[node name=\"Mesh\" type=\"MeshInstance3D\" parent=\"Wall_{i}\"]\nmesh = SubResource(\"BoxMesh_Wall\")");
                 i++;
@@ -114,8 +125,12 @@ namespace MazeGenerator
             i = 0;
             foreach (var room in _rooms)
             {
+                float posX = room.X * 4.0f;
+                float posZ = room.Y * 4.0f;
+
                 tscn.AppendLine($"\n[node name=\"Floor_{i}\" type=\"StaticBody3D\" parent=\".\"]");
-                tscn.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {room.X}, -0.05, {room.Y})");
+                // Floors stay at -0.05 to keep the top face at exactly 0.0
+                tscn.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, -0.05, {posZ})");
                 tscn.AppendLine($"[node name=\"Col\" type=\"CollisionShape3D\" parent=\"Floor_{i}\"]\nshape = SubResource(\"BoxShape_Floor\")");
                 tscn.AppendLine($"[node name=\"Mesh\" type=\"MeshInstance3D\" parent=\"Floor_{i}\"]\nmesh = SubResource(\"BoxMesh_Floor\")");
                 i++;

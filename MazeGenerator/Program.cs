@@ -28,9 +28,9 @@ namespace MazeGenerator
 
             //////////////////////////////////////////////////////////////
             /////convert maze to json
-            //MazeData md = new MazeData();
-            //var grid = md.ReadGridFile("../../../maze.dat");
-            //md.SaveToJson(grid, "../../../maze.json");
+            MazeData md = new MazeData();
+            var grid = md.ReadGridFile("../../../maze.dat");
+            md.SaveToJson(grid, "../../../maze.json");
 
 
             ///////////////////////////////////////////////////////////
