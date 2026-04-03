@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "3tYMgjAWjT8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeGenerator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\James\\.nuget\\packages\\raylib-cs\\7.0.2\\raylib-cs.7.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
