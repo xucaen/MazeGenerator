@@ -10,27 +10,30 @@ namespace MazeGenerator
         static void Main(string[] args)
         {
             // Parameters based on your "lab_big.conf" and "lab.conf" examples
-            int width = 99;  // Must be odd for the wall-path algorithm
-            int height = 99; // Must be odd
+            int width = 11;  // Must be odd for the wall-path algorithm
+            int height = 11; // Must be odd
             //char wallChar = 'X'; // Use '$' for version 1.3 style
-            int seed = 10;
+            int seed = 2112;
 
 
             MazeBuilder maze = new MazeBuilder(width, height, 'x', seed);
-
+            string Filenamebase = "mazeColor";
 
             ///Create a new maze
             // maze.Generate();
-            // maze.SaveToFile("../../../maze.dat");
+            // maze.SaveToFile(@$"../../../{Filenamebase}.dat");
 
 
+            //string msg = @"Edit the maze.dat file to make any changes to the maze...";
+            //Console.WriteLine(msg);
+            //Console.ReadKey();
 
 
             //////////////////////////////////////////////////////////////
             /////convert maze to json
             MazeData md = new MazeData();
-            var grid = md.ReadGridFile("../../../maze.dat");
-            md.SaveToJson(grid, "../../../maze.json");
+            var grid = md.ReadGridFile(@$"../../../{Filenamebase}.dat");
+            md.SaveToJson(grid, @$"../../../{Filenamebase}.json");
 
 
             ///////////////////////////////////////////////////////////
@@ -38,9 +41,9 @@ namespace MazeGenerator
 
             MazeCompiler mc = new MazeCompiler();
 
-            mc.LoadFromJson("../../../maze.json");
+            mc.LoadFromJson(@$"../../../{Filenamebase}.json");
             mc.RunPreview();
-            mc.ExportToGodot("../../../maze.tscn");
+            mc.ExportToGodot(@$"../../../{Filenamebase}.tscn");
         }
     }
 

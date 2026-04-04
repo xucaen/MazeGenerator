@@ -12,8 +12,8 @@ namespace MazeGenerator
     {
         public void SaveToJson(char[,] grid, string filePath)
         {
-            List<Point> Walls = new List<Point>();
-            List<Point> Rooms = new List<Point>();
+            List<MazeMetaData> Walls = new List<MazeMetaData>();
+            List<MazeMetaData> Rooms = new List<MazeMetaData>();
 
 
             // grid.GetLength(0) is Height, GetLength(1) is Width
@@ -28,23 +28,49 @@ namespace MazeGenerator
                     // Check for 'x' or 'X' or whatever your wallChar is
                     if (char.ToLower(cell) == 'x')
                     {
-                        Walls.Add(new Point(x, y));
+                        Walls.Add(new MazeMetaData(x, y, "Wall"));
                     }
                     else
                     {
-                        Rooms.Add(new Point(x, y));
+                        Rooms.Add(new MazeMetaData(x, y, "Rooms"));
                     }
                 }
             }
-           
 
+            // 2. Pick Start and End from the Rooms list
+            Random rng = new Random();
+            Point startPoint = new Point(-1, -1);
+            Point endPoint = new Point(-1, -1);
+
+            if (Rooms.Count > 0)
+            {
+                var r = Rooms[0];
+
+                // Pick a random index for start
+                startPoint = new Point(r.X, r.Y);
+
+                // Pick a random index for end (ensure it's not the same as start if possible)
+                do
+                {
+                    r = Rooms[Rooms.Count-1];
+                    endPoint = new Point(r.X, r.Y);
+                } while (Rooms.Count > 1 && endPoint == startPoint);
+            }
 
             // Combine and Serialize into one JSON file
             var options = new JsonSerializerOptions { WriteIndented = true };
             string jsonString = JsonSerializer.Serialize(new
             {
-                Walls = Walls.Select(p => new { p.X, p.Y }),
-                Rooms = Rooms.Select(p => new { p.X, p.Y })
+                Walls = Walls.Select(p => new { p.X, p.Y, p.Type}),
+                Rooms = Rooms.Select(p => new
+                {
+                    p.X,
+                    p.Y,
+                    Type = (p.X == startPoint.X && p.Y == startPoint.Y) ? "Start" :
+                (p.X == endPoint.X && p.Y == endPoint.Y) ? "End" : "Floor"
+                })
+
+
             }, options);
 
             File.WriteAllText(filePath, jsonString);

@@ -16,11 +16,9 @@ namespace MazeGenerator
         // Simple DTO to prevent "IsEmpty" from being serialized
         public record GridPoint(int X, int Y);
 
-        private readonly HashSet<GridPoint> _walls = new HashSet<GridPoint>();
-        private readonly HashSet<GridPoint> _rooms = new HashSet<GridPoint>();
+        private HashSet<MazeMetaData> Walls = new HashSet<MazeMetaData>();
+        private HashSet<MazeMetaData> Rooms = new HashSet<MazeMetaData>();
 
-        public HashSet<GridPoint> Walls => _walls;
-        public HashSet<GridPoint> Rooms => _rooms;
 
         /// <summary>
         /// Loads maze data from a JSON file.
@@ -36,11 +34,11 @@ namespace MazeGenerator
             // Deserialize into our clean DTO format
             var data = JsonSerializer.Deserialize<MazeDataDto>(jsonString, options);
 
-            _walls.Clear();
-            _rooms.Clear();
+            Walls.Clear();
+            Rooms.Clear();
 
-            if (data?.Walls != null) foreach (var p in data.Walls) _walls.Add(p);
-            if (data?.Rooms != null) foreach (var p in data.Rooms) _rooms.Add(p);
+            if (data?.Walls != null) foreach (var p in data.Walls) Walls.Add(p);
+            if (data?.Rooms != null) foreach (var p in data.Rooms) Rooms.Add(p);
         }
 
         /// <summary>
@@ -67,13 +65,13 @@ namespace MazeGenerator
                 Raylib.ClearBackground(Color.Black);
                 Raylib.BeginMode3D(camera);
 
-                foreach (var wall in _walls)
+                foreach (var wall in Walls)
                 {
                     Raylib.DrawCube(new Vector3(wall.X, 0.5f, wall.Y), 1, 1, 1, Color.Gray);
                     Raylib.DrawCubeWires(new Vector3(wall.X, 0.5f, wall.Y), 1, 1, 1, Color.White);
                 }
 
-                foreach (var room in _rooms)
+                foreach (var room in Rooms)
                 {
                     Raylib.DrawCube(new Vector3(room.X, 0, room.Y), 1, 0.1f, 1, Color.Blue);
                 }
@@ -99,6 +97,19 @@ namespace MazeGenerator
             tscn.AppendLine("\n[sub_resource type=\"BoxMesh\" id=\"BoxMesh_Wall\"]");
             tscn.AppendLine("size = Vector3(4, 4, 4)");
 
+
+            ///COLOR RGBA values
+            tscn.AppendLine(@"[sub_resource type= ""StandardMaterial3D"" id = ""Start_Room_Color""]");
+            tscn.AppendLine(@"albedo_color = Color(0, 0.12, 0.8, 1)");
+
+            tscn.AppendLine(@"[sub_resource type= ""StandardMaterial3D"" id = ""End_Room_Color""]");
+            tscn.AppendLine(@"albedo_color = Color(0.4, 1, 0, 1)");
+
+
+            tscn.AppendLine(@"[sub_resource type= ""StandardMaterial3D"" id = ""Wall_Color""]");
+            tscn.AppendLine(@"albedo_color = Color(1, 0.95, 0.5, 1)");
+
+
             tscn.AppendLine("\n[sub_resource type=\"BoxShape3D\" id=\"BoxShape_Floor\"]");
             tscn.AppendLine("size = Vector3(4, 0.1, 4)");
             tscn.AppendLine("\n[sub_resource type=\"BoxMesh\" id=\"BoxMesh_Floor\"]");
@@ -108,7 +119,7 @@ namespace MazeGenerator
             tscn.AppendLine("\n[node name=\"MazeLevel\" type=\"Node3D\"]");
 
             int i = 0;
-            foreach (var wall in _walls)
+            foreach (var wall in Walls)
             {
                 // Multiply X and Y by 4 to space them out. 
                 // Set Y-height to 2.0 (half the wall height) so the bottom sits at 0.
@@ -118,12 +129,15 @@ namespace MazeGenerator
                 tscn.AppendLine($"\n[node name=\"Wall_{i}\" type=\"StaticBody3D\" parent=\".\"]");
                 tscn.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, 2.0, {posZ})");
                 tscn.AppendLine($"[node name=\"Col\" type=\"CollisionShape3D\" parent=\"Wall_{i}\"]\nshape = SubResource(\"BoxShape_Wall\")");
-                tscn.AppendLine($"[node name=\"Mesh\" type=\"MeshInstance3D\" parent=\"Wall_{i}\"]\nmesh = SubResource(\"BoxMesh_Wall\")");
+                tscn.AppendLine($"[node name=\"Mesh\" type=\"MeshInstance3D\" parent=\"Wall_{i}\"]");
+
+                tscn.AppendLine(@"material_override = SubResource(""Wall_Color"")");
+                tscn.AppendLine(@"mesh = SubResource(""BoxMesh_Wall"")");
                 i++;
             }
 
             i = 0;
-            foreach (var room in _rooms)
+            foreach (var room in Rooms)
             {
                 float posX = room.X * 4.0f;
                 float posZ = room.Y * 4.0f;
@@ -132,7 +146,18 @@ namespace MazeGenerator
                 // Floors stay at -0.05 to keep the top face at exactly 0.0
                 tscn.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, -0.05, {posZ})");
                 tscn.AppendLine($"[node name=\"Col\" type=\"CollisionShape3D\" parent=\"Floor_{i}\"]\nshape = SubResource(\"BoxShape_Floor\")");
-                tscn.AppendLine($"[node name=\"Mesh\" type=\"MeshInstance3D\" parent=\"Floor_{i}\"]\nmesh = SubResource(\"BoxMesh_Floor\")");
+                tscn.AppendLine($"[node name=\"Mesh\" type=\"MeshInstance3D\" parent=\"Floor_{i}\"]");
+
+                if (room.Type.ToLowerInvariant().Equals("start"))
+                {
+                    tscn.AppendLine(@"material_override = SubResource(""Start_Room_Color"")");
+                }
+                else if (room.Type.ToLowerInvariant().Equals("end"))
+                {
+                    tscn.AppendLine(@"material_override = SubResource(""End_Room_Color"")");
+                }
+                tscn.AppendLine(@"mesh = SubResource(""BoxMesh_Floor"")");
+
                 i++;
             }
 
@@ -142,8 +167,8 @@ namespace MazeGenerator
         // Internal helper for JSON structure
         private class MazeDataDto
         {
-            public List<GridPoint> Walls { get; set; } = new();
-            public List<GridPoint> Rooms { get; set; } = new();
+            public List<MazeMetaData> Walls { get; set; } = new();
+            public List<MazeMetaData> Rooms { get; set; } = new();
         }
     }
 }

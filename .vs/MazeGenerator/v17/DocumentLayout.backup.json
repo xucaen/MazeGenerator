@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|c:\\users\\james\\source\\repos\\mazegenerator\\mazegenerator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|solutionrelative:mazegenerator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|c:\\users\\james\\source\\repos\\mazegenerator\\mazegenerator\\mazedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|solutionrelative:mazegenerator\\mazedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|c:\\users\\james\\source\\repos\\mazegenerator\\mazegenerator\\mazecompiler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|solutionrelative:mazegenerator\\mazecompiler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|c:\\users\\james\\source\\repos\\mazegenerator\\mazegenerator\\mazegenerator.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|solutionrelative:mazegenerator\\mazegenerator.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|c:\\users\\james\\source\\repos\\mazegenerator\\mazegenerator\\mazecolor.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|solutionrelative:mazegenerator\\mazecolor.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|c:\\users\\james\\source\\repos\\mazegenerator\\mazegenerator\\mazedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|solutionrelative:mazegenerator\\mazedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|c:\\users\\james\\source\\repos\\mazegenerator\\mazegenerator\\mazemetadata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|solutionrelative:mazegenerator\\mazemetadata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|c:\\users\\james\\source\\repos\\mazegenerator\\mazegenerator\\mazebuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|solutionrelative:mazegenerator\\mazebuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|c:\\users\\james\\source\\repos\\mazegenerator\\mazegenerator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E2D50B1-39E4-4871-8C94-5779C04DD268}|MazeGenerator\\MazeGenerator.csproj|solutionrelative:mazegenerator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -39,14 +39,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MazeGenerator.csproj",
-              "DocumentMoniker": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeGenerator.csproj",
-              "RelativeDocumentMoniker": "MazeGenerator\\MazeGenerator.csproj",
-              "ToolTip": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeGenerator.csproj",
-              "RelativeToolTip": "MazeGenerator\\MazeGenerator.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-02T16:18:54.729Z"
+              "Title": "mazeColor.json",
+              "DocumentMoniker": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\mazeColor.json",
+              "RelativeDocumentMoniker": "MazeGenerator\\mazeColor.json",
+              "ToolTip": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\mazeColor.json",
+              "RelativeToolTip": "MazeGenerator\\mazeColor.json",
+              "ViewState": "AgIAAFsBAAAAAAAAAAASwHQBAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-03T23:49:43.562Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MazeMetaData.cs",
+              "DocumentMoniker": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeMetaData.cs",
+              "RelativeDocumentMoniker": "MazeGenerator\\MazeMetaData.cs",
+              "ToolTip": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeMetaData.cs",
+              "RelativeToolTip": "MazeGenerator\\MazeMetaData.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAuwBwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-03T23:35:52.758Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MazeData.cs",
+              "DocumentMoniker": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeData.cs",
+              "RelativeDocumentMoniker": "MazeGenerator\\MazeData.cs",
+              "ToolTip": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeData.cs",
+              "RelativeToolTip": "MazeGenerator\\MazeData.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwDYAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-03T23:14:00.501Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -56,47 +82,22 @@
               "RelativeDocumentMoniker": "MazeGenerator\\MazeCompiler.cs",
               "ToolTip": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeCompiler.cs",
               "RelativeToolTip": "MazeGenerator\\MazeCompiler.cs",
-              "ViewState": "AgIAAGEAAAAAAAAAAAAgwIIAAABGAAAAAAAAAA==",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAAwJwAAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T16:19:05.194Z",
+              "WhenOpened": "2026-04-03T23:05:01.219Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "MazeBuilder.cs",
-              "DocumentMoniker": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeBuilder.cs",
-              "RelativeDocumentMoniker": "MazeGenerator\\MazeBuilder.cs",
-              "ToolTip": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeBuilder.cs",
-              "RelativeToolTip": "MazeGenerator\\MazeBuilder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T15:35:01.594Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\Program.cs",
               "RelativeDocumentMoniker": "MazeGenerator\\Program.cs",
-              "ToolTip": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\Program.cs*",
-              "RelativeToolTip": "MazeGenerator\\Program.cs*",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAAwCsAAAAJAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\Program.cs",
+              "RelativeToolTip": "MazeGenerator\\Program.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAuwCUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T15:34:27.916Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MazeData.cs",
-              "DocumentMoniker": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeData.cs",
-              "RelativeDocumentMoniker": "MazeGenerator\\MazeData.cs",
-              "ToolTip": "C:\\Users\\James\\Source\\repos\\MazeGenerator\\MazeGenerator\\MazeData.cs",
-              "RelativeToolTip": "MazeGenerator\\MazeData.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAYwC8AAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-30T21:48:46.49Z"
+              "WhenOpened": "2026-04-02T15:34:27.916Z"
             }
           ]
         }
