@@ -1,13 +1,16 @@
 ﻿using Raylib_cs;
-using Color = Raylib_cs.Color;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
+using Color = Raylib_cs.Color;
 
 namespace MazeGenerator
 {
@@ -86,16 +89,21 @@ namespace MazeGenerator
         /// <summary>
         /// Exports the maze as a Godot .tscn file.
         /// </summary>
-        public void ExportToGodot(string fileName)
+        public void ExportToGodot(string fileName, int level)
         {
             StringBuilder tscn = new StringBuilder();
 
             tscn.AppendLine("[gd_scene load_steps=4 format=3]");
 
+            tscn.AppendLine(@$"[ext_resource type= ""Script"" path = ""res://level_transition.gd"" id = ""Level_Transition""]");
+
+
             tscn.AppendLine("\n[sub_resource type=\"BoxShape3D\" id=\"BoxShape_Wall\"]");
             tscn.AppendLine("size = Vector3(4, 4, 4)");
             tscn.AppendLine("\n[sub_resource type=\"BoxMesh\" id=\"BoxMesh_Wall\"]");
             tscn.AppendLine("size = Vector3(4, 4, 4)");
+
+            tscn.AppendLine(@"[sub_resource type= ""BoxShape3D"" id = ""BoxShape3D_Exit""]");
 
 
             ///COLOR RGBA values
@@ -106,9 +114,13 @@ namespace MazeGenerator
             tscn.AppendLine(@"albedo_color = Color(0.4, 1, 0, 1)");
 
 
-            tscn.AppendLine(@"[sub_resource type= ""StandardMaterial3D"" id = ""Wall_Color""]");
-            tscn.AppendLine(@"albedo_color = Color(1, 0.95, 0.5, 1)");
 
+           
+            tscn.AppendLine(@"[sub_resource type= ""StandardMaterial3D"" id = ""Wall_Color""]");
+            float r = (level * 0.3f) % 1.0f;
+            float g = (level * 0.6f) % 1.0f;
+            float b = (level * 0.9f) % 1.0f; 
+            tscn.AppendLine(@$"albedo_color = Color({r:F3}, {g:F3}, {b:F3}, 1)");
 
             tscn.AppendLine("\n[sub_resource type=\"BoxShape3D\" id=\"BoxShape_Floor\"]");
             tscn.AppendLine("size = Vector3(4, 0.1, 4)");
@@ -148,6 +160,10 @@ namespace MazeGenerator
                 tscn.AppendLine($"[node name=\"Col\" type=\"CollisionShape3D\" parent=\"Floor_{i}\"]\nshape = SubResource(\"BoxShape_Floor\")");
                 tscn.AppendLine($"[node name=\"Mesh\" type=\"MeshInstance3D\" parent=\"Floor_{i}\"]");
 
+
+                ///order is important
+
+                //set the color
                 if (room.Type.ToLowerInvariant().Equals("start"))
                 {
                     tscn.AppendLine(@"material_override = SubResource(""Start_Room_Color"")");
@@ -158,8 +174,27 @@ namespace MazeGenerator
                 }
                 tscn.AppendLine(@"mesh = SubResource(""BoxMesh_Floor"")");
 
-                i++;
+
+                //set the Area3D to go to next level
+                if (room.Type.ToLowerInvariant().Equals("end"))
+                {
+                    tscn.AppendLine(@"[node name= ""ExitArea"" type = ""Area3D"" parent = ""."" unique_id = ""Exit_Area""]");
+                    tscn.AppendLine(@"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.95, 35)");
+                    tscn.AppendLine(@"script = ExtResource(""Level_Transition"")");
+                    tscn.AppendLine(@"[node name = ""CollisionShape3D"" type = ""CollisionShape3D"" parent = ""ExitArea""]");
+                    tscn.AppendLine(@"shape = SubResource(""BoxShape3D_Exit"")");                }
+                else if (room.Type.ToLowerInvariant().Equals("start"))
+                {
+                    tscn.AppendLine(@"[node name= ""SpawnPoint"" type = ""Marker3D"" parent = ""."" unique_id = ""Player_Spawn_Area""]");
+                    tscn.AppendLine(@"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.95, 6)");
+                    tscn.AppendLine(@"gizmo_extents = 3.99");
+
+                    tscn.AppendLine(@"[connection signal = ""body_entered"" from = ""ExitArea"" to = ""ExitArea"" method = ""_on_body_entered""]");
+                }
+                    
+                    i++;
             }
+
 
             File.WriteAllText(fileName, tscn.ToString());
         }

@@ -16,34 +16,38 @@ namespace MazeGenerator
             int seed = 2112;
 
 
-            MazeBuilder maze = new MazeBuilder(width, height, 'x', seed);
-            string Filenamebase = "mazeColor";
+            for (int s = seed; s < seed + 10; ++s)
+            {
 
-            ///Create a new maze
-            // maze.Generate();
-            // maze.SaveToFile(@$"../../../{Filenamebase}.dat");
+                string Filenamebase = $"Level_{s:D3}";
 
-
-            //string msg = @"Edit the maze.dat file to make any changes to the maze...";
-            //Console.WriteLine(msg);
-            //Console.ReadKey();
+                MazeBuilder maze = new MazeBuilder(width, height, 'x', s);
+                ///Create a new maze
+                maze.Generate();
+                maze.SaveToFile(@$"../../../{Filenamebase}.dat");
 
 
-            //////////////////////////////////////////////////////////////
-            /////convert maze to json
-            MazeData md = new MazeData();
-            var grid = md.ReadGridFile(@$"../../../{Filenamebase}.dat");
-            md.SaveToJson(grid, @$"../../../{Filenamebase}.json");
+                //string msg = @"Edit the maze.dat file to make any changes to the maze...";
+                //Console.WriteLine(msg);
+                //Console.ReadKey();
 
 
-            ///////////////////////////////////////////////////////////
-            ///show the map in raylib and convert to json
+                //////////////////////////////////////////////////////////////
+                /////convert maze to json
+                MazeData md = new MazeData();
+                var grid = md.ReadGridFile(@$"../../../{Filenamebase}.dat");
+                md.SaveToJson(grid, @$"../../../{Filenamebase}.json");
 
-            MazeCompiler mc = new MazeCompiler();
 
-            mc.LoadFromJson(@$"../../../{Filenamebase}.json");
-            mc.RunPreview();
-            mc.ExportToGodot(@$"../../../{Filenamebase}.tscn");
+                ///////////////////////////////////////////////////////////
+                ///show the map in raylib and convert to json
+
+                MazeCompiler mc = new MazeCompiler();
+
+                mc.LoadFromJson(@$"../../../{Filenamebase}.json");
+              //  mc.RunPreview();
+                mc.ExportToGodot(@$"../../../{Filenamebase}.tscn", s);
+            }
         }
     }
 
