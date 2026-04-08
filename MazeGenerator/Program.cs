@@ -10,16 +10,16 @@ namespace MazeGenerator
         static void Main(string[] args)
         {
             // Parameters based on your "lab_big.conf" and "lab.conf" examples
-            int width = 11;  // Must be odd for the wall-path algorithm
-            int height = 11; // Must be odd
+            int width = 9;  // Must be odd for the wall-path algorithm
+            int height = 9; // Must be odd
             //char wallChar = 'X'; // Use '$' for version 1.3 style
-            int seed = 2112;
+            int seed = 1;
+            List<string> levelNames = new List<string>();
 
-
-            for (int s = seed; s < seed + 10; ++s)
+            for (int s = seed; s < seed + 30; ++s)
             {
 
-                string Filenamebase = $"Level_{s:D3}";
+                string Filenamebase = $"MazeLevel{s}";
 
                 MazeBuilder maze = new MazeBuilder(width, height, 'x', s);
                 ///Create a new maze
@@ -45,8 +45,22 @@ namespace MazeGenerator
                 MazeCompiler mc = new MazeCompiler();
 
                 mc.LoadFromJson(@$"../../../{Filenamebase}.json");
-              //  mc.RunPreview();
-                mc.ExportToGodot(@$"../../../{Filenamebase}.tscn", s);
+                //  mc.RunPreview();
+                levelNames.Add(mc.ExportToGodot(@$"../../../{Filenamebase}.tscn", s));
+
+
+            }
+
+
+            ///Now make the world
+
+            //TODO: let worldBuilder build the  main_world_node.tscn
+            if (levelNames != null)
+            {
+                WorldBuilder world = new WorldBuilder();
+                world.Init();
+                world.AddLevels(levelNames);
+                world.Finish();
             }
         }
     }

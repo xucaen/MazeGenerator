@@ -89,9 +89,11 @@ namespace MazeGenerator
         /// <summary>
         /// Exports the maze as a Godot .tscn file.
         /// </summary>
-        public void ExportToGodot(string fileName, int level)
+        public string ExportToGodot(string fileName, int level)
         {
             StringBuilder tscn = new StringBuilder();
+            string levelName = "";
+
 
             tscn.AppendLine("[gd_scene load_steps=4 format=3]");
 
@@ -127,8 +129,10 @@ namespace MazeGenerator
             tscn.AppendLine("\n[sub_resource type=\"BoxMesh\" id=\"BoxMesh_Floor\"]");
             tscn.AppendLine("size = Vector3(4, 0.1, 4)");
 
+            levelName = $"MazeLevel{level}";
 
-            tscn.AppendLine("\n[node name=\"MazeLevel\" type=\"Node3D\"]");
+            tscn.AppendLine($"\n[node name=\"{levelName}\" type=\"Node3D\"]");
+           
 
             int i = 0;
             foreach (var wall in Walls)
@@ -179,14 +183,14 @@ namespace MazeGenerator
                 if (room.Type.ToLowerInvariant().Equals("end"))
                 {
                     tscn.AppendLine(@"[node name= ""ExitArea"" type = ""Area3D"" parent = ""."" unique_id = ""Exit_Area""]");
-                    tscn.AppendLine(@"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.95, 35)");
+                    tscn.AppendLine(@$"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, 0.05, {posZ})");
                     tscn.AppendLine(@"script = ExtResource(""Level_Transition"")");
                     tscn.AppendLine(@"[node name = ""CollisionShape3D"" type = ""CollisionShape3D"" parent = ""ExitArea""]");
                     tscn.AppendLine(@"shape = SubResource(""BoxShape3D_Exit"")");                }
                 else if (room.Type.ToLowerInvariant().Equals("start"))
                 {
                     tscn.AppendLine(@"[node name= ""SpawnPoint"" type = ""Marker3D"" parent = ""."" unique_id = ""Player_Spawn_Area""]");
-                    tscn.AppendLine(@"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.95, 6)");
+                    tscn.AppendLine(@$"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, 0.05, {posZ})");
                     tscn.AppendLine(@"gizmo_extents = 3.99");
 
                     tscn.AppendLine(@"[connection signal = ""body_entered"" from = ""ExitArea"" to = ""ExitArea"" method = ""_on_body_entered""]");
@@ -197,6 +201,7 @@ namespace MazeGenerator
 
 
             File.WriteAllText(fileName, tscn.ToString());
+            return levelName;
         }
 
         // Internal helper for JSON structure
