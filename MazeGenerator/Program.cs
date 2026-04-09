@@ -11,7 +11,7 @@ namespace MazeGenerator
         {
             // Parameters based on your "lab_big.conf" and "lab.conf" examples
             int width = 9;  // Must be odd for the wall-path algorithm
-            int height = 9; // Must be odd
+            int height = 9; // Must be odd, 
             //char wallChar = 'X'; // Use '$' for version 1.3 style
             int seed = 1;
             List<string> levelNames = new List<string>();
@@ -21,9 +21,12 @@ namespace MazeGenerator
 
                 string Filenamebase = $"MazeLevel{s}";
 
-                MazeBuilder maze = new MazeBuilder(width, height, 'x', s);
                 ///Create a new maze
+                bool indicateStartEndCells = true;
+                MazeBuilder maze = new MazeBuilder(width, height, 'x', s, indicateStartEndCells);
                 maze.Generate();
+                maze.MakeMoreRooms();
+                maze.MakeObservationDeck();
                 maze.SaveToFile(@$"../../../{Filenamebase}.dat");
 
 
@@ -35,7 +38,7 @@ namespace MazeGenerator
                 //////////////////////////////////////////////////////////////
                 /////convert maze to json
                 MazeData md = new MazeData();
-                var grid = md.ReadGridFile(@$"../../../{Filenamebase}.dat");
+                var grid = maze.GetFullGrid();
                 md.SaveToJson(grid, @$"../../../{Filenamebase}.json");
 
 
@@ -48,6 +51,12 @@ namespace MazeGenerator
                 //  mc.RunPreview();
                 levelNames.Add(mc.ExportToGodot(@$"../../../{Filenamebase}.tscn", s));
 
+                if(File.Exists(@$"../../../{Filenamebase}.tscn"))
+                {
+                    File.Delete(@$"../../../{Filenamebase}.json");
+                    File.Delete(@$"../../../{Filenamebase}.dat");
+                }
+
 
             }
 
@@ -57,6 +66,8 @@ namespace MazeGenerator
             //TODO: let worldBuilder build the  main_world_node.tscn
             if (levelNames != null)
             {
+
+                //TOdo: generate a scifi megastructure world
                 WorldBuilder world = new WorldBuilder();
                 world.Init();
                 world.AddLevels(levelNames);

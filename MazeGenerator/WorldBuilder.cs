@@ -74,8 +74,8 @@ namespace MazeGenerator
         internal void Finish()
         {
             // Saves to the project root as Main.tscn
-            sb.AppendLine("[node name= \"Player\" parent = \".\" unique_id = 635456787 instance = ExtResource(\"player\")]");
-            sb.AppendLine("[node name= \"World\" parent = \".\" unique_id = 475116200 instance = ExtResource(\"world\")]");
+            sb.AppendLine("[node name= \"Player\" parent = \".\" instance = ExtResource(\"player\")]");
+            sb.AppendLine("[node name= \"World\" parent = \".\" instance = ExtResource(\"world\")]");
             sb.AppendLine();
 
             try

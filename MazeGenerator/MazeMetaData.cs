@@ -11,9 +11,9 @@ namespace MazeGenerator
         public int Height { get; set; }
         public int Width { get; set; }
 
-        // Change 'Type' from a field to a Property
+      //Type is Room, or Wall
         public string Type { get; set; }
-
+        public bool IsLit { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
 
