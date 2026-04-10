@@ -12,16 +12,4 @@
     <PackageReference Include="Raylib-cs" Version="7.0.2" />
   </ItemGroup>
 
-<ItemGroup>
-  <FileWrites Include="$(ProjectDir)*.tscn" />
-</ItemGroup>
-
-<Target Name="CustomClean" AfterTargets="Clean">
-  <ItemGroup>
-    <_FilesToDelete Include="$(ProjectDir)*.tscn" />
-  </ItemGroup>
-  <Delete Files="@(_FilesToDelete)" />
-  <Message Importance="high" Text="Successfully cleaned custom .tscn files." />
-</Target>
-
 </Project>

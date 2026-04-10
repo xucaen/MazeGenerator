@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace MazeGenerator
 {
-    public class WorldBuilder
+    public class MazeHelixBuilder
     {
         StringBuilder sb = new StringBuilder();
 

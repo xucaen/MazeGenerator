@@ -37,7 +37,7 @@ namespace MazeGenerator
 
                 //////////////////////////////////////////////////////////////
                 /////convert maze to json
-                MazeData md = new MazeData();
+                MazeGridToJSONConverter md = new MazeGridToJSONConverter();
                 var grid = maze.GetFullGrid();
                 md.SaveToJson(grid, @$"../../../{Filenamebase}.json");
 
@@ -68,7 +68,7 @@ namespace MazeGenerator
             {
 
                 //TOdo: generate a scifi megastructure world
-                WorldBuilder world = new WorldBuilder();
+                MazeHelixBuilder world = new MazeHelixBuilder();
                 world.Init();
                 world.AddLevels(levelNames);
                 world.Finish();

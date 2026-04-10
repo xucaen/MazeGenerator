@@ -8,7 +8,7 @@ using System.Text.Json;
 namespace MazeGenerator
 {
 
-    public class MazeData
+    public class MazeGridToJSONConverter
     {
         public void SaveToJson(List<StringBuilder> grid, string filePath)
         {
