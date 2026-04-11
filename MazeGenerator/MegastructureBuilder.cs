@@ -47,6 +47,14 @@ namespace MazeGenerator
 
                 sb.AppendLine($"[node name=\"AlienMachine_{i}\" parent=\".\" instance=ExtResource(\"machine\")]");
                 sb.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {x}, 10.0, {z})");
+                // ADD THESE LINES TO TARGET THE CHILD NODE 'SimpleMover'
+                // This overrides the values for this specific instance
+                float varyingSpeed = 0.5f + (i * 0.2f); // Each machine gets faster
+                float varyingOffset = i * 1.5f;        // Each machine starts at a different point in the wave
+
+                sb.AppendLine($"[node name=\"SimpleMover\" parent=\"AlienMachine_{i}\"]");
+                sb.AppendLine($"speed = {varyingSpeed}");
+                sb.AppendLine($"offset = {varyingOffset}");
                 sb.AppendLine();
                 currentRadius *= goldenRatio;
             }

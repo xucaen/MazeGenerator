@@ -16,12 +16,12 @@ namespace MazeGenerator
 
         public MazeHelixBuilder(int level) => this.level = level;
 
-        public void Build(int width, int height, int NumberOfMazesInThisHelix)
+        public void Build(int width, int height, int NumberOfMazesInThisHelix, string TorchResourceFile)
         {
             resourceBucket.Clear();
             nodeBucket.Clear();
 
-            resourceBucket.AppendLine("[ext_resource type=\"PackedScene\" path=\"res://scifi_torch.tscn\" id=\"1_scifi_torch\"]");
+            resourceBucket.AppendLine($"[ext_resource type=\"PackedScene\" path=\"res://{TorchResourceFile}\" id=\"1_scifi_torch\"]");
             resourceBucket.AppendLine("[ext_resource type=\"Script\" path=\"res://scripts/level_transition.gd\" id=\"2_level_transition\"]");
 
 

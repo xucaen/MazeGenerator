@@ -140,6 +140,8 @@ namespace MazeGenerator
                     float posX = room.X * 4.0f;
                     float posZ = room.Y * 4.0f;
                     float posY = 5.0f;
+
+                    //TODO: figure out how to use different torch resource for each helix
                     nodes.AppendLine($"[node name=\"ScifiTorch_{i}\" parent=\"MazeSection_{MazeCount}/Torches\" instance=ExtResource(\"1_scifi_torch\")]");
                     nodes.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, {posY}, {posZ})");
                 }

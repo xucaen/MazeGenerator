@@ -17,7 +17,7 @@ namespace MazeGenerator
         private int _width;
         private int _height;
 
-        //TODO: change all char arrays to a more c# friendly data structure, perhaps string builder
+
 
         private readonly List<StringBuilder> _grid;
         private readonly char _wall;
@@ -89,12 +89,6 @@ namespace MazeGenerator
             _grid[startY][startX] = _indicateStartEndCells ? _start : _path;
             history.Push((startX, startY));
 
-
-            //*********************************************************
-            //TODO: determin where in the grid to place torches with _torch
-            //Torches should be places far enough apart to provide some dark eareas in the grid,
-            //but also close enough together so the player has constant trail of light along the path
-            //*******************************************************
 
             while (history.Count > 0)
             {
@@ -189,7 +183,7 @@ namespace MazeGenerator
 
         public void MakeObservationDeck()
         {
-            //TODO: observation deck should be two rows os _space beneath the wall
+            //observation deck should be two rows os _space beneath the wall
             //this requires changing the structure of the grid, which is allowed since this is a maze builder.
             //1. space out three centermost walls at the bottom of the grid
             //2. then add 2 rows of _space beneath the wall

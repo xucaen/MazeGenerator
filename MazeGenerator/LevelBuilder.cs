@@ -9,6 +9,7 @@ namespace MazeGenerator
         private StringBuilder sb;
         public int NumberOfLevels { get; }
         public int NumberOfMazesPerLevel { get; }
+        private readonly List<string> TorchTypes = new List<string>() { "scifi_torch_round.tscn", "scifi_torch_prism.tscn" };
 
         public LevelBuilder(StringBuilder sb, int NumberOfLevels, int NumberOfMazesPerLevel)
         {
@@ -47,7 +48,7 @@ namespace MazeGenerator
 
                 // Construct the Helix file
                 MazeHelixBuilder helixBuilder = new MazeHelixBuilder(level);
-                helixBuilder.Build(9, 9, this.NumberOfMazesPerLevel);
+                helixBuilder.Build(9, 9, this.NumberOfMazesPerLevel, TorchTypes[level]);
                 helixBuilder.Save(helixName);
 
                 // Construct the Megastructure file (linking the helix inside)
