@@ -11,7 +11,7 @@ namespace MazeGenerator
         {
             ///just maming a single level for now
             //a level contains a single Helix of mazes plus alien megastructures surrounding it.
-            GameBuilder game = new GameBuilder(1, 30);
+            GameBuilder game = new GameBuilder();
             game.Build();
             
         }
