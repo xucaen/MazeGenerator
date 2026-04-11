@@ -10,7 +10,7 @@ namespace MazeGenerator
 
     public class MazeGridToJSONConverter
     {
-        public void SaveToJson(List<StringBuilder> grid, string filePath)
+        public string ConvertGridToJson(List<StringBuilder> grid)
         {
             List<MazeMetaData> Walls = new List<MazeMetaData>();
             List<MazeMetaData> Rooms = new List<MazeMetaData>();
@@ -82,7 +82,7 @@ namespace MazeGenerator
 
             }, options);
 
-            File.WriteAllText(filePath, jsonString);
+            return jsonString;
 
         }
 

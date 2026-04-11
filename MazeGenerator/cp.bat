@@ -1,5 +1,5 @@
 @echo off
 
-call copy_scenes.bat Labyrinth3D
+call copy_scenes.bat tmp
 
 pause

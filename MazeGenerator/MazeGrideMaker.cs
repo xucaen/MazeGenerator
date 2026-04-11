@@ -7,7 +7,7 @@ using System.Text;
 namespace MazeGenerator
 {
 
-    public class MazeBuilder
+    public class MazeGrideMaker
     {
 
         // Also helpful to add these so LevelGenerator doesn't have to hardcode 801/601
@@ -34,7 +34,7 @@ namespace MazeGenerator
             return _grid;
         }
 
-        public MazeBuilder(int width, int height, char wallChar, int seed, bool indicateStartEndCells)
+        public MazeGrideMaker(int width, int height, char wallChar, int seed, bool indicateStartEndCells)
         {
             _width = width;
             _height = height;
@@ -164,7 +164,7 @@ namespace MazeGenerator
         public void MakeMoreRooms()
         {
             bool indicateStartEndCells = false;
-            MazeBuilder tmp = new MazeBuilder(Width, Height, _wall, _rng.Next(), indicateStartEndCells);
+            MazeGrideMaker tmp = new MazeGrideMaker(Width, Height, _wall, _rng.Next(), indicateStartEndCells);
             tmp.Generate();
             var secondGrid = tmp.GetFullGrid();
             // 3. Overlay the second maze onto the primary _grid
