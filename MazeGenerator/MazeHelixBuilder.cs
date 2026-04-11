@@ -32,6 +32,8 @@ namespace MazeGenerator
             {
                 var gridMaker = new MazeGrideMaker(width, height, 'x', i + level, true);
                 gridMaker.Generate();
+                gridMaker.MakeMoreRooms();
+                gridMaker.MakeObservationDeck();
 
                 var converter = new MazeGridToJSONConverter();
                 string jsonMaze = converter.ConvertGridToJson(gridMaker.GetFullGrid());
