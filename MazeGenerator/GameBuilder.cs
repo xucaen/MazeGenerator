@@ -20,7 +20,6 @@ namespace MazeGenerator
         {
             sb.AppendLine("[gd_scene format=3]");
             sb.AppendLine();
-            sb.AppendLine("[ext_resource type=\"Script\" path=\"res://main.gd\" id=\"main_gd\"]");
             sb.AppendLine("[ext_resource type=\"PackedScene\" path=\"res://player.tscn\" id=\"player\"]");
             sb.AppendLine("[ext_resource type=\"PackedScene\" path=\"res://world.tscn\" id=\"world\"]");
             // Add the megastructure resource link

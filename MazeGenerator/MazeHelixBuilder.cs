@@ -22,6 +22,8 @@ namespace MazeGenerator
             nodeBucket.Clear();
 
             resourceBucket.AppendLine("[ext_resource type=\"PackedScene\" path=\"res://scifi_torch.tscn\" id=\"1_scifi_torch\"]");
+            resourceBucket.AppendLine("[ext_resource type=\"Script\" path=\"res://scripts/level_transition.gd\" id=\"2_level_transition\"]");
+
 
             nodeBucket.AppendLine($"[node name=\"Helix_Level_{level}\" type=\"Node3D\"]");
             nodeBucket.AppendLine();

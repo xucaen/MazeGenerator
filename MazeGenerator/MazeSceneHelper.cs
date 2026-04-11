@@ -39,11 +39,11 @@ namespace MazeGenerator
             res.AppendLine();
 
             res.AppendLine($"[sub_resource type=\"StandardMaterial3D\" id=\"Start_Room_Color\"]");
-            res.AppendLine("albedo_color = Color(0, 1, 0, 1)");
+            res.AppendLine("albedo_color = Color(0, 0, 1, 1)");
             res.AppendLine();
 
             res.AppendLine($"[sub_resource type=\"StandardMaterial3D\" id=\"End_Room_Color\"]");
-            res.AppendLine("albedo_color = Color(1, 0, 0, 1)");
+            res.AppendLine("albedo_color = Color(0, 1, 0, 1)");
             res.AppendLine();
 
             res.AppendLine($"[sub_resource type=\"BoxShape3D\" id=\"{MazeCount}_WallShape\"]");
