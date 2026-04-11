@@ -113,6 +113,7 @@ namespace MazeGenerator
                 if (room.Type.ToLowerInvariant().Equals("end"))
                 {
                     nodes.AppendLine($"\n[node name=\"ExitArea\" type=\"Area3D\" parent=\"{floorPath}\"]");
+                    nodes.AppendLine("script = ExtResource(\"2_level_transition\")");
                     nodes.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)");
 
 
