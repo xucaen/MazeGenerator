@@ -31,21 +31,24 @@ namespace MazeGenerator
             sb.AppendLine("[node name=\"MazeHelix\" parent=\".\" instance=ExtResource(\"helix_scene\")]");
             sb.AppendLine();
 
-            float diamondY = helixHeight + 30.0f;
+            float diamondY = helixHeight + 500.0f;
             sb.AppendLine("[node name=\"AlienDiamond\" parent=\".\" instance=ExtResource(\"diamond\")]");
             sb.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, {diamondY}, 0)");
             sb.AppendLine();
 
-            float circleRadius = 40.0f;
+            float currentRadius = 500.0f;
+            float goldenRatio = 1.6180339887f;
+
             for (int i = 0; i < 5; i++)
             {
                 float angle = i * (MathF.PI * 2 / 5);
-                float x = MathF.Cos(angle) * circleRadius;
-                float z = MathF.Sin(angle) * circleRadius;
+                float x = MathF.Cos(angle) * currentRadius;
+                float z = MathF.Sin(angle) * currentRadius;
 
                 sb.AppendLine($"[node name=\"AlienMachine_{i}\" parent=\".\" instance=ExtResource(\"machine\")]");
                 sb.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {x}, 10.0, {z})");
                 sb.AppendLine();
+                currentRadius *= goldenRatio;
             }
 
             File.WriteAllText($"../../../Megastructure_Lvl{level}.tscn", sb.ToString());
