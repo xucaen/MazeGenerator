@@ -114,7 +114,7 @@ namespace MazeGenerator
                 {
                     nodes.AppendLine($"\n[node name=\"ExitArea\" type=\"Area3D\" parent=\"{floorPath}\"]");
                     nodes.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)");
-                    nodes.AppendLine(@"script = ExtResource(""1_scifi_torch"")");
+
 
                     nodes.AppendLine($"\n[node name=\"CollisionShape3D\" type=\"CollisionShape3D\" parent=\"{floorPath}/ExitArea\"]");
                     nodes.AppendLine(@"shape = SubResource(""BoxShape3D_Exit"")");
