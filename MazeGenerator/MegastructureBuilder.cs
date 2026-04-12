@@ -39,7 +39,8 @@ namespace MazeGenerator
             float currentRadius = 500.0f;
             float goldenRatio = 1.6180339887f;
 
-            for (int i = 0; i < 5; i++)
+            int NumberOfAlienMegastructures = 5;
+            for (int i = 0; i < NumberOfAlienMegastructures; i++)
             {
                 float angle = i * (MathF.PI * 2 / 5);
                 float x = MathF.Cos(angle) * currentRadius;

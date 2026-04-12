@@ -12,7 +12,7 @@ namespace MazeGenerator
         private StringBuilder sb = new StringBuilder();
         public void Build()
         {
-            int totalLevels = 2;
+            int totalLevels = 7;
             int mazesPerLevel = 30;
 
             LevelBuilder levels = new LevelBuilder(sb, totalLevels, mazesPerLevel);
