@@ -94,7 +94,7 @@ namespace MazeGenerator
 
             // 3. PROCESS ROOMS (Floors and Torches)
             // Sort rooms by Z (Vertical) to find top and bottom
-            var sortedRooms = Rooms.OrderByDescending(r => r.Z).ToList();
+            var sortedRooms = Rooms.OrderBy(r => r.Z).ToList();
             var startRoom = sortedRooms.First();
             var endRoom = sortedRooms.Last();
 
@@ -103,9 +103,12 @@ namespace MazeGenerator
                 var room = Rooms[r];
                 float gx = room.X * Program.horizontalSize;
                 float gy = room.Y * Program.verticalSize;
-                float gy_floor = gy - (Program.verticalSize / 2.0f); // Adjust floor to bottom of cell
                 float gz = room.Z * Program.horizontalSize;
 
+
+                float floorX = gx + (Program.horizontalSize / 2.0f);
+                float floorY = gy - (Program.verticalSize / 2.0f); // Adjust floor to bottom of cell
+                float floorZ = gz + (Program.horizontalSize / 2.0f);
 
                 bool isSStartOrEnd = (room == startRoom || room == endRoom);
 
@@ -115,7 +118,8 @@ namespace MazeGenerator
                 {
                     // Instance your floor.tscn
                     nodes.AppendLine($@"[node name=""Floor_{r}"" parent=""MazeSection/Rooms"" instance=ExtResource(""floor_scene"")]");
-                    nodes.AppendLine($@"transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, {gx}, {gy_floor}, {gz})");
+                    nodes.AppendLine($@"transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, {gx}, {floorY}, {gz})");
+                    Console.WriteLine($"Floor placed at ({gx}, {floorY}, {gz})");
                 }
                 else
                 {
@@ -152,11 +156,14 @@ namespace MazeGenerator
                 //experiment - only place torches at the vertical drop or start and end
                 if (shouldPlaceTorch)
                 {
-                    float torchX = gx +  (Program.horizontalSize / 2.0f);
-                    float torchY = gy + (Program.verticalSize / 2.0f);
-                    float torchZ = gz  + (Program.horizontalSize / 2.0f);
+                    float torchX = gx + (Program.horizontalSize / 2.0f);
+                    float torchY = floorY + 2.0f;
+                    float torchZ = gz + (Program.horizontalSize / 2.0f);
                     nodes.AppendLine($@"[node name=""Torch_{r}"" parent=""MazeSection/Torches"" instance=ExtResource(""active_torch"")]");
                     nodes.AppendLine($@"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {torchX}, {torchY}, {torchZ})");
+
+                    Console.WriteLine($"Torch placed at ({torchX}, {torchY}, {torchZ})");
+
                 }
 
             }
