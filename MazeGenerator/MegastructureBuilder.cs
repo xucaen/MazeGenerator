@@ -39,7 +39,7 @@ namespace MazeGenerator
             float currentRadius = 500.0f;
             float goldenRatio = 1.6180339887f;
 
-            int NumberOfAlienMegastructures = 5;
+            int NumberOfAlienMegastructures = 0;
             for (int i = 0; i < NumberOfAlienMegastructures; i++)
             {
                 float angle = i * (MathF.PI * 2 / 5);

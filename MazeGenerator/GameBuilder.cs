@@ -44,7 +44,7 @@ namespace MazeGenerator
             levels.Finish();
 
             // SECTION 5: PERSISTENCE
-            string GameFileName = "Labyrinth3D.tscn";
+            string GameFileName = "../../../Labyrinth3D.tscn";
             try
             {
                 File.WriteAllText($"../../../{GameFileName}", sb.ToString());

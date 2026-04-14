@@ -86,30 +86,6 @@ namespace MazeGenerator
 
         }
 
-        public char[,] ReadGridFile(string gridFile)
-        {
-            // Read all lines from the file into an array of strings
-            string[] lines = File.ReadAllLines(gridFile);
-
-            if (lines.Length == 0)
-            {
-                throw new Exception("The maze file is empty.");
-            }
-
-            int height = lines.Length;       
-            int width = lines[0].Length;    
-            char[,] maze = new char[height, width];
-
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    // Map the character from the string array to the 2D char array
-                    maze[y, x] = lines[y][x];
-                }
-            }
-
-            return maze;
-        }
+       
     }
 }

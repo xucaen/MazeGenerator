@@ -1,5 +1,6 @@
 @echo off
 
-call copy_scenes.bat Labyrinth3D
+call copy_scenes.bat labyrinth-3d-cube
 
-pause
+EXIT /b
+exit
