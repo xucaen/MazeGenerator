@@ -12,8 +12,7 @@ namespace MazeGenerator
 
         // These match your specific file names
         private readonly List<string> TorchTypes = new List<string>() {
-            "scifi_torch_round.tscn", "scifi_torch_prism.tscn", "scifi_torch_box.tscn",
-            "scifi_torch_capsule.tscn", "scifi_torch_cylinder.tscn", "scifi_torch_torus.tscn", "scifi_torch_tube.tscn"
+            "Dungeon_torch_capsul.tscn"
         };
 
         public void LoadFromJson(string json)
@@ -40,8 +39,6 @@ namespace MazeGenerator
             res.AppendLine($@"[ext_resource type=""PackedScene"" path=""res://{selectedTorch}"" id=""active_torch""]");
 
             // Materials
-            res.AppendLine(@"[sub_resource type=""StandardMaterial3D"" id=""Start_Room_Color""]");
-            res.AppendLine("albedo_color = Color(0, 0, 1, 1)"); // Blue
             res.AppendLine(@"[sub_resource type=""StandardMaterial3D"" id=""End_Room_Color""]");
             res.AppendLine("albedo_color = Color(0, 1, 0, 1)"); // Green
                                                                 // Define a Shader that colors based on face direction
@@ -65,23 +62,26 @@ namespace MazeGenerator
 
             // Register Wall Mesh (Keep these procedural or swap for a .tscn if you have one)
             res.AppendLine(@"[sub_resource type=""BoxShape3D"" id=""Maze_BoxShape""]");
-            res.AppendLine($"size = Vector3({Program.horizontalSize}, {Program.verticalSize}, {Program.horizontalSize})");
+            res.AppendLine($"size = Vector3({CubeDimensions.HorizontalSize}, {CubeDimensions.VerticalSize}, {CubeDimensions.HorizontalSize})");
 
             res.AppendLine(@"[sub_resource type=""BoxMesh"" id=""Maze_BoxMesh""]");
-            res.AppendLine($"size = Vector3({Program.horizontalSize}, {Program.verticalSize}, {Program.horizontalSize})");
+            res.AppendLine($"size = Vector3({CubeDimensions.HorizontalSize}, {CubeDimensions.VerticalSize}, {CubeDimensions.HorizontalSize})");
             res.AppendLine(@"material = SubResource(""Wall_Material"")");
 
             // Exit Detection Shape
             res.AppendLine(@"[sub_resource type=""BoxShape3D"" id=""Exit_Trigger_Shape""]");
-            res.AppendLine($"size = Vector3({Program.horizontalSize / 2}, {Program.verticalSize / 2}, {Program.horizontalSize / 2})");
+            res.AppendLine($"size = Vector3({CubeDimensions.HorizontalSize / 2}, {CubeDimensions.VerticalSize / 2}, {CubeDimensions.HorizontalSize / 2})");
 
             // 2. PROCESS WALLS
+            List<Maze3DMetaData> sortedWalls = Walls.OrderByDescending(w => w.Y).ToList();
+            Maze3DMetaData firstWall = sortedWalls.First();//to get the proper Y index
+
             for (int i = 0; i < Walls.Count; i++)
             {
                 var wall = Walls[i];
-                float gx = wall.X * Program.horizontalSize;
-                float gy = wall.Y * Program.verticalSize;
-                float gz = wall.Z * Program.horizontalSize;
+                float gx = wall.X * CubeDimensions.HorizontalSize;
+                float gy = wall.Y * CubeDimensions.VerticalSize;
+                float gz = wall.Z * CubeDimensions.HorizontalSize;
 
                 nodes.AppendLine($@"[node name=""Wall_{i}"" type=""StaticBody3D"" parent=""MazeSection/Walls""]");
                 nodes.AppendLine($@"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {gx}, {gy}, {gz})");
@@ -90,75 +90,27 @@ namespace MazeGenerator
                 nodes.AppendLine(@"mesh = SubResource(""Maze_BoxMesh"")");
                 nodes.AppendLine($@"[node name=""Col"" type=""CollisionShape3D"" parent=""{path}""]");
                 nodes.AppendLine(@"shape = SubResource(""Maze_BoxShape"")");
+
+               // Console.WriteLine($"Create wall node: \tWall_{i} at ({wall.X}, {wall.Y}, {wall.Z})");
             }
 
             // 3. PROCESS ROOMS (Floors and Torches)
-            // Sort rooms by Z (Vertical) to find top and bottom
-            var sortedRooms = Rooms.OrderBy(r => r.Z).ToList();
-            var startRoom = sortedRooms.First();
-            var endRoom = sortedRooms.Last();
 
             for (int r = 0; r < Rooms.Count; r++)
             {
                 var room = Rooms[r];
-                float gx = room.X * Program.horizontalSize;
-                float gy = room.Y * Program.verticalSize;
-                float gz = room.Z * Program.horizontalSize;
+                float gx = room.X * CubeDimensions.HorizontalSize;
+                float gy = room.Y * CubeDimensions.VerticalSize;
+                float gz = room.Z * CubeDimensions.HorizontalSize;
 
 
-                float floorX = gx + (Program.horizontalSize / 2.0f);
-                float floorY = gy - (Program.verticalSize / 2.0f); // Adjust floor to bottom of cell
-                float floorZ = gz + (Program.horizontalSize / 2.0f);
-
-                bool isSStartOrEnd = (room == startRoom || room == endRoom);
-
-
-                // ONLY place a floor if it's NOT a vertical passage
-                if (!room.IsVerticalPassage || isSStartOrEnd)
+                if (room.IsLit)
                 {
-                    // Instance your floor.tscn
-                    nodes.AppendLine($@"[node name=""Floor_{r}"" parent=""MazeSection/Rooms"" instance=ExtResource(""floor_scene"")]");
-                    nodes.AppendLine($@"transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, {gx}, {floorY}, {gz})");
-                    Console.WriteLine($"Floor placed at ({gx}, {floorY}, {gz})");
-                }
-                else
-                {
-                    // Optional: Place a ladder or just leave it empty for a drop-hole
-                    nodes.AppendLine($@"# Room_{r} is a vertical shaft - Floor skipped.");
-                }
+                    // Center the torch horizontally in the 5x5 area (if HorizontalSize is 5)
+                    float torchX = gx;
+                    float torchZ = gz;
+                    float torchY = gy - 2.0f;
 
-                // --- START ROOM LOGIC ---
-                if (room == startRoom)
-                {
-                    // Apply Blue Color
-                    nodes.AppendLine(@"surface_material_override/0 = SubResource(""Start_Room_Color"")");
-
-                    // Add SpawnPoint (Marker3D)
-                    // Note: Transform is relative to Floor instance. 0.5 scale cancels the floor's 2.0 scale.
-                    nodes.AppendLine($@"[node name=""SpawnPoint"" type=""Marker3D"" parent=""MazeSection/Rooms/Floor_{r}""]");
-                    nodes.AppendLine(@"transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.1, 0)");
-                    nodes.AppendLine(@"gizmo_extents = 3.99");
-                }
-                // --- END ROOM LOGIC ---
-                else if (room == endRoom)
-                {
-                    // Apply Green Color
-                    nodes.AppendLine(@"surface_material_override/0 = SubResource(""End_Room_Color"")");
-
-                    // Add Exit Area (Area3D)
-                    nodes.AppendLine($@"[node name=""ExitArea"" type=""Area3D"" parent=""MazeSection/Rooms/Floor_{r}""]");
-                    nodes.AppendLine(@"transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.0, 0)");
-                    nodes.AppendLine($@"[node name=""Collision"" type=""CollisionShape3D"" parent=""MazeSection/Rooms/Floor_{r}/ExitArea""]");
-                    nodes.AppendLine(@"shape = SubResource(""Exit_Trigger_Shape"")");
-                }
-
-                bool shouldPlaceTorch = room.IsLit;
-                //experiment - only place torches at the vertical drop or start and end
-                if (shouldPlaceTorch)
-                {
-                    float torchX = gx + (Program.horizontalSize / 2.0f);
-                    float torchY = floorY + 2.0f;
-                    float torchZ = gz + (Program.horizontalSize / 2.0f);
                     nodes.AppendLine($@"[node name=""Torch_{r}"" parent=""MazeSection/Torches"" instance=ExtResource(""active_torch"")]");
                     nodes.AppendLine($@"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {torchX}, {torchY}, {torchZ})");
 

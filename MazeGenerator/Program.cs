@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace MazeGenerator
 {
+    public static class CubeDimensions
+    {
+        public static float Length=9, Width=9, Height=11;
+        public static float HorizontalSize = 5.0f; // This makes rooms 5m wide/deep
+        public static float VerticalSize = 12.0f;   // This makes rooms 12m tall
 
+    }
     class Program
     {
-        public static float horizontalSize = 5.0f; // This makes rooms 5m wide/deep
-        public static float verticalSize = 12.0f;   // This makes rooms 12m tall
 
 
         static void Main(string[] args)
@@ -28,33 +33,7 @@ namespace MazeGenerator
 
         }
 
-        public static void PrintToConsole(char[,,] _grid)
-        {
-            int width = _grid.GetLength(0);
-            int height = _grid.GetLength(1);
-            int depth = _grid.GetLength(2);
-
-            for (int z = 0; z < depth; z++)
-            {
-                Console.WriteLine($"--- LAYER (Z): {z} ---");
-
-                // We iterate through Y (rows) then X (columns)
-                for (int y = 0; y < height; y++)
-                {
-                    for (int x = 0; x < width; x++)
-                    {
-                        char cell = _grid[x, y, z];
-                        // Using a block character for walls makes it easier to read
-                        if (cell == 'x' || cell == 'X')
-                            Console.Write("█");
-                        else
-                            Console.Write(" ");
-                    }
-                    Console.WriteLine(); // New line after each row
-                }
-                Console.WriteLine(); // Gap between layers
-            }
-        }
+     
     }
 
 }

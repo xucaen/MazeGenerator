@@ -8,15 +8,12 @@ namespace MazeGenerator
     public class Maze3DLevelBuilder
     {
         private StringBuilder sb;
-        private int Width, Height, Depth;
         private List<int> builtCubes = new List<int>(); // Track cubes for Finish()
 
-        public Maze3DLevelBuilder(StringBuilder sb, int width, int height, int depth)
+        public Maze3DLevelBuilder(StringBuilder sb)
         {
             this.sb = sb;
-            this.Width = width;
-            this.Height = height;
-            this.Depth = depth;
+           
         }
 
         public void Build(int cubeNumber)
@@ -26,8 +23,10 @@ namespace MazeGenerator
             builtCubes.Add(cubeNumber);
 
             // 1. GENERATE DATA
-            var gridMaker = new Maze3DGrideMaker(Width, Height, Depth, 'x', 42 + cubeNumber);
+            var gridMaker = new Maze3DGrideMaker('x', 42 + cubeNumber);
             gridMaker.Generate3DMaze(1, 1, 1);
+
+
 
             gridMaker.Print();
 
@@ -63,8 +62,7 @@ namespace MazeGenerator
 
         public void Finish()
         {
-            // Instance every cube we built. Stack them vertically based on cube index.
-            float verticalStep = Depth * 12.0f;
+            float verticalStep = CubeDimensions.Height * CubeDimensions.VerticalSize;
             foreach (int id in builtCubes)
             {
                 float yOffset = id * verticalStep;
