@@ -21,19 +21,21 @@ namespace MazeGenerator
         {
             ///just maming a single level for now
             //a level contains a single Helix of mazes plus alien megastructures surrounding it.
-           // GameBuilder game = new GameBuilder();
-            //game.Build();
+            //GameBuilder game = new GameBuilder();
+            //game.BuildMazes();
 
 
-            Maze3DGameBuilder game3d = new Maze3DGameBuilder();
-            game3d.Build();
+            // Maze3DGameBuilder game3d = new Maze3DGameBuilder();
+            //  game3d.Build();
 
+            MazeGameBuilder game = new MazeGameBuilder();
+            game.Build();
 
 
 
         }
 
-     
+
     }
 
 }

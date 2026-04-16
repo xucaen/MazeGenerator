@@ -35,7 +35,7 @@ namespace MazeGenerator
 
             // Resources must be defined before they are referenced
             res.AppendLine($"[sub_resource type=\"BoxShape3D\" id=\"BoxShape3D_Exit\"]");
-            res.AppendLine($"size = Vector3({CubeDimensions.HorizontalSize}, {CubeDimensions.VerticalSize}, {CubeDimensions.HorizontalSize})");
+            res.AppendLine("size = Vector3(4, 4, 4)");
             res.AppendLine();
 
             res.AppendLine($"[sub_resource type=\"StandardMaterial3D\" id=\"Start_Room_Color\"]");
@@ -47,11 +47,11 @@ namespace MazeGenerator
             res.AppendLine();
 
             res.AppendLine($"[sub_resource type=\"BoxShape3D\" id=\"{MazeCount}_WallShape\"]");
-            res.AppendLine("size = Vector3({CubeDimensions.HorizontalSize}, {CubeDimensions.VerticalSize}, {CubeDimensions.HorizontalSize})");
+            res.AppendLine("size = Vector3(4, 4, 4)");
             res.AppendLine();
 
             res.AppendLine($"[sub_resource type=\"BoxMesh\" id=\"{MazeCount}_WallMesh\"]");
-            res.AppendLine("size = Vector3({CubeDimensions.HorizontalSize}, {CubeDimensions.VerticalSize}, {CubeDimensions.HorizontalSize})");
+            res.AppendLine("size = Vector3(4, 4, 4)");
             res.AppendLine();
 
             res.AppendLine(@$"[sub_resource type= ""StandardMaterial3D"" id = ""{MazeCount}_Wall_Color""]");
@@ -67,8 +67,8 @@ namespace MazeGenerator
 
             foreach (var wall in Walls)
             {
-                float posX = wall.X * CubeDimensions.HorizontalSize;
-                float posZ = wall.Y * CubeDimensions.VerticalSize;
+                float posX = wall.X * 4.0f;
+                float posZ = wall.Y * 4.0f;
 
                 nodes.AppendLine($"[node name=\"Wall_{i}\" type=\"StaticBody3D\" parent=\"MazeSection_{MazeCount}/Walls\"]");
                 nodes.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, 2, {posZ})");
@@ -88,9 +88,8 @@ namespace MazeGenerator
 
             foreach (var room in Rooms)
             {
-                float posX = room.X * CubeDimensions.HorizontalSize;
-                float posZ = room.Y * CubeDimensions.HorizontalSize;
-
+                float posX = room.X * 4.0f;
+                float posZ = room.Y * 4.0f;
                 string floorPath = $"MazeSection_{MazeCount}/Rooms/Floor_{i}";
 
                 nodes.AppendLine($"\n[node name=\"Floor_{i}\" type=\"StaticBody3D\" parent=\"MazeSection_{MazeCount}/Rooms\"]");
@@ -138,9 +137,9 @@ namespace MazeGenerator
             {
                 if (room.IsLit)
                 {
-                    float posX = room.X * CubeDimensions.HorizontalSize;
-                    float posZ = room.Y * CubeDimensions.HorizontalSize;
-                    float posY = CubeDimensions.VerticalSize;
+                    float posX = room.X * 4.0f;
+                    float posZ = room.Y * 4.0f;
+                    float posY = 5.0f;
 
                     //TODO: figure out how to use different torch resource for each helix
                     nodes.AppendLine($"[node name=\"ScifiTorch_{i}\" parent=\"MazeSection_{MazeCount}/Torches\" instance=ExtResource(\"1_scifi_torch\")]");

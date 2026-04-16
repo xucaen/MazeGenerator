@@ -62,15 +62,15 @@ namespace MazeGenerator
 
             // Register Wall Mesh (Keep these procedural or swap for a .tscn if you have one)
             res.AppendLine(@"[sub_resource type=""BoxShape3D"" id=""Maze_BoxShape""]");
-            res.AppendLine($"size = Vector3({CubeDimensions.HorizontalSize}, {CubeDimensions.VerticalSize}, {CubeDimensions.HorizontalSize})");
+            res.AppendLine(@$"size = Vector3({CubeDimensions.HorizontalSize}, {CubeDimensions.VerticalSize}, {CubeDimensions.HorizontalSize})");
 
             res.AppendLine(@"[sub_resource type=""BoxMesh"" id=""Maze_BoxMesh""]");
-            res.AppendLine($"size = Vector3({CubeDimensions.HorizontalSize}, {CubeDimensions.VerticalSize}, {CubeDimensions.HorizontalSize})");
+            res.AppendLine(@$"size = Vector3({CubeDimensions.HorizontalSize}, {CubeDimensions.VerticalSize}, {CubeDimensions.HorizontalSize})");
             res.AppendLine(@"material = SubResource(""Wall_Material"")");
 
             // Exit Detection Shape
             res.AppendLine(@"[sub_resource type=""BoxShape3D"" id=""Exit_Trigger_Shape""]");
-            res.AppendLine($"size = Vector3({CubeDimensions.HorizontalSize / 2}, {CubeDimensions.VerticalSize / 2}, {CubeDimensions.HorizontalSize / 2})");
+            res.AppendLine(@$"size = Vector3({CubeDimensions.HorizontalSize / 2}, {CubeDimensions.VerticalSize / 2}, {CubeDimensions.HorizontalSize / 2})");
 
             // 2. PROCESS WALLS
             List<Maze3DMetaData> sortedWalls = Walls.OrderByDescending(w => w.Y).ToList();

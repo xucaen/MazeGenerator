@@ -16,6 +16,10 @@
   <FileWrites Include="$(ProjectDir)*.tscn" />
 </ItemGroup>
 
+<ItemGroup>
+  <Compile Remove="Maze3DMegastructureBuilder.cs" />
+</ItemGroup>
+
 <Target Name="CustomClean" AfterTargets="Clean">
   <ItemGroup>
     <_FilesToDelete Include="$(ProjectDir)*.tscn" />
