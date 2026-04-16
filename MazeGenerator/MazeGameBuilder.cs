@@ -10,7 +10,7 @@ namespace MazeGenerator
         {
             // 1. INIT BUILDERS (no shared buffers!)
             var cubeBuilder = new Maze3DLevelBuilder();
-            var levelBuilder = new LevelBuilder(7, 30);
+            var levelBuilder = new LevelBuilder();
 
             // 2. RUN BUILD PHASE (generate files + resources)
             int numberOfCubes = 1;

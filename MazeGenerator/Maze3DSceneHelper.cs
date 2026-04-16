@@ -35,8 +35,8 @@ namespace MazeGenerator
 
             // 1. REGISTER RESOURCES
             // Register your specific floor scene and the torch
-            res.AppendLine($@"[ext_resource type=""PackedScene"" path=""res://floor.tscn"" id=""floor_scene""]");
-            res.AppendLine($@"[ext_resource type=""PackedScene"" path=""res://{selectedTorch}"" id=""active_torch""]");
+            res.AppendLine($@"[ext_resource type=""PackedScene"" path=""res://assets/floor.tscn"" id=""floor_scene""]");
+            res.AppendLine($@"[ext_resource type=""PackedScene"" path=""res://assets/{selectedTorch}"" id=""active_torch""]");
 
             // Materials
             res.AppendLine(@"[sub_resource type=""StandardMaterial3D"" id=""End_Room_Color""]");

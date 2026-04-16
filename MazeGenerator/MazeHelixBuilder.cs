@@ -32,7 +32,7 @@ namespace MazeGenerator
             resourceSet.Clear();
 
             // Base resources (deduplicated)
-            AddResourceLine($"[ext_resource type=\"PackedScene\" path=\"res://{torchResourceFile}\" id=\"1_scifi_torch\"]");
+            AddResourceLine($"[ext_resource type=\"PackedScene\" path=\"res://assets/{torchResourceFile}\" id=\"1_scifi_torch\"]");
             AddResourceLine("[ext_resource type=\"Script\" path=\"res://scripts/level_transition.gd\" id=\"2_level_transition\"]");
 
             // Root node

@@ -10,8 +10,11 @@ namespace MazeGenerator
         public StringBuilder ResourceSB { get; } = new StringBuilder();
         public StringBuilder NodeSB { get; } = new StringBuilder();
 
-        public int NumberOfLevels { get; }
-        public int NumberOfMazesPerLevel { get; }
+        public static int NumberOfLevels = 3;
+        public static int NumberOfMazesPerLevel = 5;
+        public static int MazeLayerWidthX = 9;
+        public static int MazeLayerWidthZ = 11;
+
 
         private readonly List<string> TorchTypes = new List<string>()
         {
@@ -24,22 +27,20 @@ namespace MazeGenerator
             "scifi_torch_tube.tscn"
         };
 
-        public LevelBuilder(int numberOfLevels, int numberOfMazesPerLevel)
+        public LevelBuilder()
         {
-            this.NumberOfLevels = numberOfLevels;
-            this.NumberOfMazesPerLevel = numberOfMazesPerLevel;
         }
 
         public void Build()
         {
             // Generate external files + register resources
-            for (int level = 0; level < this.NumberOfLevels; ++level)
+            for (int level = 0; level < NumberOfLevels; ++level)
             {
                 string helixName = $"Helix_Level_{level}.tscn";
 
                 // Build Helix
                 MazeHelixBuilder helixBuilder = new MazeHelixBuilder(level);
-                helixBuilder.Build(9, 9, this.NumberOfMazesPerLevel, TorchTypes[level % TorchTypes.Count]);
+                helixBuilder.Build(MazeLayerWidthX, MazeLayerWidthZ, NumberOfMazesPerLevel, TorchTypes[level % TorchTypes.Count]);
                 helixBuilder.Save(helixName);
 
                 // Build Megastructure
@@ -57,9 +58,9 @@ namespace MazeGenerator
 
         public void Finish()
         {
-            double angleStep = (2 * Math.PI) / this.NumberOfLevels;
+            double angleStep = (2 * Math.PI) / NumberOfLevels;
 
-            for (int level = 0; level < this.NumberOfLevels; ++level)
+            for (int level = 0; level < NumberOfLevels; ++level)
             {
                 double angle = level * angleStep;
 

@@ -24,7 +24,7 @@ namespace MazeGenerator
             // 1. GENERATE DATA
             var gridMaker = new Maze3DGrideMaker('x', 42 + cubeNumber);
             gridMaker.Generate3DMaze(1, 1, 1);
-            gridMaker.Print();
+
 
             var converter = new Maze3DGridToJSONConverter();
             string jsonMaze = converter.Convert3DGridToJson(gridMaker.GetFullGrid());

@@ -154,32 +154,7 @@ namespace MazeGenerator
 
         public List<StringBuilder> GetFullGrid() => _grid;
 
-        internal void Print()
-        {
-            // 1. Loop through HEIGHT (Y) first. 
-            // This ensures we print Level 0, Level 1, etc., up to the top.
-            for (int y = 0; y < (int)CubeDimensions.Height; y++)
-            {
-                Console.WriteLine($"--- Vertical Level (Y): {y} ---");
-
-                // 2. Inside each Level, we loop through the depth (Z)
-                for (int z = 0; z < (int)CubeDimensions.Width; z++)
-                {
-                    // 3. FIX THE MATH: 
-                    // We need to find the specific row in our List<StringBuilder>.
-                    // Since SetCell uses (z * Height) + y, we must match that exactly.
-                    int rowIndex = (z * (int)CubeDimensions.Height) + y;
-
-                    if (rowIndex < _grid.Count)
-                    {
-                        Console.WriteLine(_grid[rowIndex].ToString());
-                    }
-                }
-                // Add a blank line between levels for readability
-                Console.WriteLine();
-            }
-        }
-
+      
 
     }
 }

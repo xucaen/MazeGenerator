@@ -21,8 +21,8 @@ namespace MazeGenerator
             sb.AppendLine();
 
             sb.AppendLine($"[ext_resource type=\"PackedScene\" path=\"res://{helixFileName}\" id=\"helix_scene\"]");
-            sb.AppendLine("[ext_resource type=\"PackedScene\" path=\"res://alien_diamond.tscn\" id=\"diamond\"]");
-            sb.AppendLine("[ext_resource type=\"PackedScene\" path=\"res://alien_machine.tscn\" id=\"machine\"]");
+            sb.AppendLine("[ext_resource type=\"PackedScene\" path=\"res://assets/alien_diamond.tscn\" id=\"diamond\"]");
+            sb.AppendLine("[ext_resource type=\"PackedScene\" path=\"res://assets/alien_machine.tscn\" id=\"machine\"]");
             sb.AppendLine();
 
             sb.AppendLine($"[node name=\"Megastructure_Lvl{level}\" type=\"Node3D\"]");
@@ -39,7 +39,7 @@ namespace MazeGenerator
             float currentRadius = 500.0f;
             float goldenRatio = 1.6180339887f;
 
-            int NumberOfAlienMegastructures = 0;
+            int NumberOfAlienMegastructures = 1;
             for (int i = 0; i < NumberOfAlienMegastructures; i++)
             {
                 float angle = i * (MathF.PI * 2 / 5);
