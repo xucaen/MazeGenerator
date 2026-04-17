@@ -59,26 +59,6 @@ namespace MazeGenerator
         }
 
 
-        public void SaveToFile(string filePath)
-        {
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(filePath))
-                {
-                    foreach (var row in _grid)
-                    {
-                        // StringBuilder.ToString() is very efficient here
-                        writer.WriteLine(row.ToString());
-                    }
-                }
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine($"An error occurred while saving the maze: {ex.Message}");
-            }
-        }
-
-
         private void GenerateIterative(int startX, int startY)
         {
             Stack<(int x, int y)> history = new Stack<(int x, int y)>();

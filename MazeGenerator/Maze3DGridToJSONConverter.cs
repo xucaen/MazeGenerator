@@ -7,53 +7,51 @@ namespace MazeGenerator
 {
     public class Maze3DGridToJSONConverter
     {
-        public string Convert3DGridToJson(List<StringBuilder> grid)
+        public string Convert3DGridToJson(List<List<StringBuilder>> cube)
         {
-
             List<Maze3DMetaData> Walls = new List<Maze3DMetaData>();
             List<Maze3DMetaData> Rooms = new List<Maze3DMetaData>();
 
-            int totalRows = grid.Count;
+            // Using the nested structure:
+            // y = Floor (Height)
+            // z = Row (Width/Depth)
+            // x = Column (Length)
 
-
-            for (int z = 0; z < (int)CubeDimensions.Width; z++)
+            for (int floorIdx = 0; floorIdx < cube.Count; floorIdx++) // Iterating through Floors
             {
-                for (int y = 0; y < (int)CubeDimensions.Height; y++)
+                List<StringBuilder> currentFloor = cube[floorIdx];
+
+                for (int rowIdx = 0; rowIdx < currentFloor.Count; rowIdx++) // Iterating through Rows
                 {
-                    int rowIndex = (z * (int)CubeDimensions.Height) + y;
+                    StringBuilder currentRow = currentFloor[rowIdx];
 
-                    // Safety check for calculated index
-                    if (rowIndex >= grid.Count) continue;
-
-                    StringBuilder currentRow = grid[rowIndex];
-
-                    for (int x = 0; x < (int)CubeDimensions.Length; x++)
+                    for (int c = 0; c < currentRow.Length; c++) // Iterating through Characters
                     {
-                        char cell = currentRow[x];
+                        char cellValue = currentRow[c];
 
-                        if (cell == ' ')
+                        if (cellValue == ' ') // It's a Room/Air
                         {
-                            var room = new Maze3DMetaData(x, y, z, "Room");
+                            var room = new Maze3DMetaData(c, floorIdx, rowIdx, "Room");
 
-                            // 1. Detect Surrounding Air
-                            room.HasAirBelow = (z > 0 && grid[((z - 1) * (int)CubeDimensions.Height) + y][x] == ' ');
-                            room.HasAirAbove = (z < (int)CubeDimensions.Width - 1 && grid[((z + 1) * (int)CubeDimensions.Height) + y][x] == ' ');
+                            // 1. Detect Surrounding Air (Vertical check)
+                            // Check the floor below (y - 1)
+                            room.HasAirBelow = (floorIdx > 0 && cube[floorIdx - 1][rowIdx][c] == ' ');
+
+                            // Check the floor above (y + 1)
+                            room.HasAirAbove = (floorIdx < cube.Count - 1 && cube[floorIdx + 1][rowIdx][c] == ' ');
 
                             // 3. MERGED FLOOR LOGIC
-                            // We delete the floor if:
-                            // - It's the Entrance (so player falls in)
-                            // - It's a vertical shaft (air above or below)
-                            bool isVerticalPassage =  room.HasAirBelow || room.HasAirAbove;
+                            bool isVerticalPassage = room.HasAirBelow || room.HasAirAbove;
+                            // Note: You can add specific logic here to flag 'isVerticalPassage' in your metadata if needed.
 
                             // 4. Lighting
-                            // Light the entrance and shafts so the player can see the drops
                             room.IsLit = (Rooms.Count % 4 == 0);
 
                             Rooms.Add(room);
                         }
-                        else
+                        else // It's a Wall
                         {
-                            Walls.Add(new Maze3DMetaData(x, y, z, "Wall"));
+                            Walls.Add(new Maze3DMetaData(c, floorIdx, rowIdx, "Wall"));
                         }
                     }
                 }
@@ -61,5 +59,6 @@ namespace MazeGenerator
 
             return JsonSerializer.Serialize(new { Walls, Rooms }, new JsonSerializerOptions { WriteIndented = true });
         }
+
     }
 }
