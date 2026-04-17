@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Raylib_cs;
+using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
+using System.Xml;
 
 namespace MazeGenerator
 {
@@ -32,6 +35,7 @@ namespace MazeGenerator
             final.AppendLine();
 
             // BASE RESOURCES
+            final.AppendLine(@"[ext_resource type=""PackedScene"" path=""res://Vehicles/space_fighter_3w_lights.tscn"" id = ""space_fighter""]");
             final.AppendLine(@"[ext_resource type=""PackedScene"" path=""res://player.tscn"" id=""player""]");
             final.AppendLine(@"[ext_resource type=""PackedScene"" path=""res://world.tscn"" id=""world""]");
 
@@ -46,6 +50,9 @@ namespace MazeGenerator
             final.AppendLine();
 
             // CORE INSTANCES
+            final.AppendLine(@"[node name=""SpaceFighter"" parent=""."" instance=ExtResource(""space_fighter"")]");
+            final.AppendLine(@"transform=Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.045872, 129.33089, 17.900475)");
+            final.AppendLine();
             final.AppendLine(@"[node name=""Player"" parent=""."" instance=ExtResource(""player"")]");
             final.AppendLine(@"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 127 , 37)");
             final.AppendLine(@"[node name=""Environment"" parent=""."" instance=ExtResource(""world"")]");
@@ -56,7 +63,7 @@ namespace MazeGenerator
             final.Append(levelBuilder.NodeSB);
 
             // 4. SAVE
-            string gameFileName = "../../../Labyrinth3D.tscn";
+            string gameFileName = "../../../Labyrinth3D2.tscn";
 
             try
             {
