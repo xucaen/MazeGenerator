@@ -41,6 +41,7 @@ namespace MazeGenerator
 
             for (int i = 0; i < numberOfMazes; i++)
             {
+                int globalIndex = (level * numberOfMazes) + i;
                 // --- Generate Maze ---
                 var gridMaker = new MazeGrideMaker(width, height, 'x', i + level, true);
                 gridMaker.Generate();
@@ -53,7 +54,7 @@ namespace MazeGenerator
                 var helper = new MazeSceneHelper();
                 helper.LoadFromJson(jsonMaze);
 
-                var parts = helper.MakeGodotScene(i);
+                var parts = helper.MakeGodotScene(i, globalIndex);
 
                 // --- Resources (deduped) ---
                 AppendResourceBlock(parts.Resources);
@@ -73,7 +74,7 @@ namespace MazeGenerator
                     $"Transform3D({cosA}, 0, {(sinA == 0.0f ? 0.0f : -sinA) }, 0, 1, 0, {sinA}, 0, {cosA}, {x}, {y}, {z})";
 
                 // --- Node ---
-                NodeSB.AppendLine($"[node name=\"MazeSection_{i}\" type=\"Node3D\" parent=\".\"]");
+                NodeSB.AppendLine($"[node name=\"MazeSection_{globalIndex}\" type=\"Node3D\" parent=\".\"]");
                 NodeSB.AppendLine($"transform = {transform}");
                 NodeSB.Append(parts.Nodes);
 

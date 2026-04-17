@@ -45,7 +45,7 @@ namespace MazeGenerator
                             // Note: You can add specific logic here to flag 'isVerticalPassage' in your metadata if needed.
 
                             // 4. Lighting
-                            room.IsLit = (Rooms.Count % 4 == 0);
+                            room.IsLit = (Rooms.Count % 8 == 0);
 
                             Rooms.Add(room);
                         }

@@ -28,7 +28,7 @@ namespace MazeGenerator
                     Rooms.Add(p);
         }
 
-        public SceneParts MakeGodotScene(int MazeCount)
+        public SceneParts MakeGodotScene(int MazeCount, int MazeSectionIndex)
         {
             StringBuilder res = new StringBuilder();
             StringBuilder nodes = new StringBuilder();
@@ -62,7 +62,7 @@ namespace MazeGenerator
 
 
             int i = 0;
-            nodes.AppendLine($"[node name=\"Walls\" type=\"Node3D\" parent=\"MazeSection_{MazeCount}\"]");
+            nodes.AppendLine($"[node name=\"Walls\" type=\"Node3D\" parent=\"MazeSection_{MazeSectionIndex}\"]");
 
 
             foreach (var wall in Walls)
@@ -70,29 +70,29 @@ namespace MazeGenerator
                 float posX = wall.X * 4.0f;
                 float posZ = wall.Y * 4.0f;
 
-                nodes.AppendLine($"[node name=\"Wall_{i}\" type=\"StaticBody3D\" parent=\"MazeSection_{MazeCount}/Walls\"]");
+                nodes.AppendLine($"[node name=\"Wall_{i}\" type=\"StaticBody3D\" parent=\"MazeSection_{MazeSectionIndex}/Walls\"]");
                 nodes.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, 2, {posZ})");
 
-                nodes.AppendLine($"[node name=\"Mesh\" type=\"MeshInstance3D\" parent=\"MazeSection_{MazeCount}/Walls/Wall_{i}\"]");
+                nodes.AppendLine($"[node name=\"Mesh\" type=\"MeshInstance3D\" parent=\"MazeSection_{MazeSectionIndex}/Walls/Wall_{i}\"]");
                 nodes.AppendLine($"mesh = SubResource(\"{MazeCount}_WallMesh\")");
                 nodes.AppendLine($"surface_material_override/0 = SubResource(\"{MazeCount}_Wall_Color\")");
 
-                nodes.AppendLine($"[node name=\"Col\" type=\"CollisionShape3D\" parent=\"MazeSection_{MazeCount}/Walls/Wall_{i}\"]");
+                nodes.AppendLine($"[node name=\"Col\" type=\"CollisionShape3D\" parent=\"MazeSection_{MazeSectionIndex}/Walls/Wall_{i}\"]");
                 nodes.AppendLine($"shape = SubResource(\"{MazeCount}_WallShape\")");
                 nodes.AppendLine();
                 i++;
             }
 
             i = 0;
-            nodes.AppendLine($"[node name=\"Rooms\" type=\"Node3D\" parent=\"MazeSection_{MazeCount}\"]");
+            nodes.AppendLine($"[node name=\"Rooms\" type=\"Node3D\" parent=\"MazeSection_{MazeSectionIndex}\"]");
 
             foreach (var room in Rooms)
             {
                 float posX = room.X * 4.0f;
                 float posZ = room.Y * 4.0f;
-                string floorPath = $"MazeSection_{MazeCount}/Rooms/Floor_{i}";
+                string floorPath = $"MazeSection_{MazeSectionIndex}/Rooms/Floor_{i}";
 
-                nodes.AppendLine($"\n[node name=\"Floor_{i}\" type=\"StaticBody3D\" parent=\"MazeSection_{MazeCount}/Rooms\"]");
+                nodes.AppendLine($"\n[node name=\"Floor_{i}\" type=\"StaticBody3D\" parent=\"MazeSection_{MazeSectionIndex}/Rooms\"]");
                 nodes.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, -0.05, {posZ})");
 
                 nodes.AppendLine($"[node name=\"Col\" type=\"CollisionShape3D\" parent=\"{floorPath}\"]");
@@ -114,6 +114,7 @@ namespace MazeGenerator
                 {
                     nodes.AppendLine($"\n[node name=\"ExitArea\" type=\"Area3D\" parent=\"{floorPath}\"]");
                     nodes.AppendLine("script = ExtResource(\"2_level_transition\")");
+                    nodes.AppendLine($"my_section_id = {MazeSectionIndex}");
                     nodes.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)");
 
 
@@ -131,7 +132,7 @@ namespace MazeGenerator
                 i++;
             }
 
-            nodes.AppendLine($"[node name=\"Torches\" type=\"Node3D\" parent=\"MazeSection_{MazeCount}\"]");
+            nodes.AppendLine($"[node name=\"Torches\" type=\"Node3D\" parent=\"MazeSection_{MazeSectionIndex}\"]");
             i = 0;
             foreach (var room in Rooms)
             {
@@ -142,7 +143,7 @@ namespace MazeGenerator
                     float posY = 5.0f;
 
                     //TODO: figure out how to use different torch resource for each helix
-                    nodes.AppendLine($"[node name=\"ScifiTorch_{i}\" parent=\"MazeSection_{MazeCount}/Torches\" instance=ExtResource(\"1_scifi_torch\")]");
+                    nodes.AppendLine($"[node name=\"ScifiTorch_{i}\" parent=\"MazeSection_{MazeSectionIndex}/Torches\" instance=ExtResource(\"1_scifi_torch\")]");
                     nodes.AppendLine($"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {posX}, {posY}, {posZ})");
                 }
                 i++;

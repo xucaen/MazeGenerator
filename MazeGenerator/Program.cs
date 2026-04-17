@@ -8,7 +8,7 @@ namespace MazeGenerator
 {
     public static class CubeDimensions
     {
-        public static float Length=9, Width=9, Height=11;
+        public static float Length=21, Width=25, Height=9;
         public static float HorizontalSize = 5.0f; // This makes rooms 5m wide/deep
         public static float VerticalSize = 12.0f;   // This makes rooms 12m tall
 

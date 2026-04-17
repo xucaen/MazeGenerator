@@ -27,7 +27,6 @@ namespace MazeGenerator
         {
             StringBuilder res = new StringBuilder();
             StringBuilder nodes = new StringBuilder();
-            //float blockSize = 4.0f;
 
             // Use modulo to pick ONE torch type for this entire cube
             int torchIndex = cubeId % TorchTypes.Count;
@@ -35,7 +34,6 @@ namespace MazeGenerator
 
             // 1. REGISTER RESOURCES
             // Register your specific floor scene and the torch
-            res.AppendLine($@"[ext_resource type=""PackedScene"" path=""res://assets/floor.tscn"" id=""floor_scene""]");
             res.AppendLine($@"[ext_resource type=""PackedScene"" path=""res://assets/{selectedTorch}"" id=""active_torch""]");
 
             // Materials
