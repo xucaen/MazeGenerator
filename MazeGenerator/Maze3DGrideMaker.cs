@@ -33,7 +33,7 @@ namespace MazeGenerator
             {
                 var gridMaker = new MazeGrideMaker((int)CubeDimensions.Width , (int)CubeDimensions.Length, _wall, y, false);
                 gridMaker.Generate();
-                gridMaker.MakeMoreRooms();
+               // gridMaker.MakeMoreRooms();
 
                 _cube.Add(gridMaker.GetFullGrid());
             }
