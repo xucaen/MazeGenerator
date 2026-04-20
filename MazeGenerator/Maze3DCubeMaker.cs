@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MazeGenerator
 {
-    public class Maze3DGrideMaker
+    public class Maze3DCubeMaker
     {
 
         // Representing the 3D grid as a list of rows. 
@@ -13,7 +13,7 @@ namespace MazeGenerator
         private List<List<StringBuilder>> _cube;
         private readonly char _wall;
 
-        public Maze3DGrideMaker(char wallChar, int seed)
+        public Maze3DCubeMaker(char wallChar, int seed)
         {
             _wall = wallChar;
 

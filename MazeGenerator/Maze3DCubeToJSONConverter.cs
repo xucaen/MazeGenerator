@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace MazeGenerator
 {
-    public class Maze3DGridToJSONConverter
+    public class Maze3DCubeToJSONConverter
     {
         public string Convert3DGridToJson(List<List<StringBuilder>> cube)
         {

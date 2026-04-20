@@ -22,11 +22,11 @@ namespace MazeGenerator
             builtCubes.Add(cubeNumber);
 
             // 1. GENERATE DATA
-            var cubeMaker = new Maze3DGrideMaker('x', 42 + cubeNumber);
+            var cubeMaker = new Maze3DCubeMaker('x', 42 + cubeNumber);
             cubeMaker.Generate3DMaze();
 
 
-            var converter = new Maze3DGridToJSONConverter();
+            var converter = new Maze3DCubeToJSONConverter();
             string jsonMaze = converter.Convert3DGridToJson(cubeMaker.GetFullGrid());
 
             // 2. CONVERT TO GODOT SCENE
